@@ -18,11 +18,12 @@
 
 html, body, #root {
   height: 100%;
+  width: 100%;
   background: var(--bg);
   font-family: 'Outfit', sans-serif;
 }
 
-body {
+#root {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,12 +103,12 @@ h2 { font-family: 'Fraunces', serif; font-size: clamp(20px, 2.2vw, 26px); font-w
 .field { margin-bottom: 10px; }
 label { display: block; font-size: 10.5px; font-weight: 700; color: var(--text); margin-bottom: 4px; letter-spacing: .06em; text-transform: uppercase; }
 
-input:not([type=checkbox]) {
+input:not([type=checkbox]), select {
   width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px;
   background: var(--surface); font-family: 'Outfit', sans-serif; font-size: 13.5px; color: var(--text);
   outline: none; transition: border .2s, box-shadow .2s;
 }
-input:not([type=checkbox]):focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(53, 144, 212, .1); }
+input:not([type=checkbox]):focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(53, 144, 212, .1); }
 input::placeholder { color: var(--muted); font-weight: 300; }
 
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }

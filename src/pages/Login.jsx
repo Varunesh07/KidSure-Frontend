@@ -10,7 +10,7 @@ export default function Login() {
   const navigate = useNavigate()
 
   const [loginData, setLoginData] = useState({ email: '', password: '' })
-  const [signupData, setSignupData] = useState({ firstName: '', lastName: '', email: '', password: '', agreed: false })
+  const [signupData, setSignupData] = useState({ firstName: '', lastName: '', email: '', password: '', role: 'user', agreed: false })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -76,7 +76,7 @@ export default function Login() {
         name: `${signupData.firstName} ${signupData.lastName}`.trim(),
         email: signupData.email,
         password: signupData.password,
-        role: 'user',
+        role: signupData.role,
       })
       localStorage.setItem('token', res.data.token)
       navigate('/')
@@ -358,6 +358,18 @@ export default function Login() {
               <label>Password</label>
               <input type="password" placeholder="Min. 8 characters" autoComplete="new-password" required minLength={8}
                 value={signupData.password} onChange={e => setSignupData({ ...signupData, password: e.target.value })} />
+            </div>
+            <div className="field">
+              <label>I am a</label>
+              <select 
+                value={signupData.role} 
+                onChange={e => setSignupData({ ...signupData, role: e.target.value })}
+                required
+              >
+                <option value="user">Parent</option>
+                <option value="hospital_admin">Hospital Admin</option>
+                <option value="superadmin">Admin</option>
+              </select>
             </div>
             <div className="chkRow">
               <input type="checkbox" id="terms" checked={signupData.agreed}
