@@ -7,6 +7,7 @@ import SymptomsPage from './pages/SymptomsPage';
 import ResultsPage from './pages/ResultsPage';
 import HospitalDetail from './pages/HospitalDetail';
 import SavedPage from './pages/SavedPage';
+import AdminPage from './pages/AdminPage';
 import Sidebar from './components/Sidebar';
 import MobileTopBar from './components/MobileTopBar';
 import BottomNav from './components/BottomNav';
@@ -63,7 +64,11 @@ const AdminRoute = ({ children }) => {
   
   const token = localStorage.getItem('token');
   if (!token) return <Navigate to="/login" replace />;
-  if (user && user.role !== 'superadmin') return <Navigate to="/home" replace />;
+  
+  if (user && user.role !== 'superadmin' && user.role !== 'hospital_admin') {
+    return <Navigate to="/home" replace />;
+  }
+  
   return <AppShell>{children}</AppShell>;
 };
 
@@ -87,7 +92,7 @@ export default function App() {
             <Route path="/hospital/:id" element={<PrivateRoute><HospitalDetail /></PrivateRoute>} />
             <Route path="/saved" element={<PrivateRoute><SavedPage /></PrivateRoute>} />
             
-            <Route path="/admin" element={<AdminRoute><div className="p-7 text-center">Admin Dashboard</div></AdminRoute>} />
+            <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
           </Routes>
         </BrowserRouter>
       </LocationProvider>

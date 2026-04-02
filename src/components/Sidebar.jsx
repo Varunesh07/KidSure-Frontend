@@ -16,7 +16,7 @@ export default function Sidebar() {
     { id: '/saved', label: 'Saved', Icon: Bookmark },
   ];
 
-  if (user?.role === 'superadmin') {
+  if (user?.role === 'superadmin' || user?.role === 'hospital_admin') {
     navItems.push({ id: '/admin', label: 'Admin Dashboard', Icon: ShieldAlert });
   }
 

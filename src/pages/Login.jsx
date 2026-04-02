@@ -368,7 +368,6 @@ export default function Login() {
               >
                 <option value="user">Parent</option>
                 <option value="hospital_admin">Hospital Admin</option>
-                <option value="superadmin">Admin</option>
               </select>
             </div>
             <div className="chkRow">
