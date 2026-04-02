@@ -38,8 +38,22 @@ export const AuthProvider = ({ children }) => {
     window.location.href = '/';
   };
 
+  const toggleBookmark = async (hospitalId) => {
+    try {
+      const res = await api.post(`/api/user/saved/${hospitalId}`);
+      setUser(prev => ({
+        ...prev,
+        savedHospitals: res.data.savedHospitals
+      }));
+      return res.data.saved;
+    } catch (err) {
+      console.error('Failed to toggle bookmark', err);
+      return null;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, login, logout, loading, fetchMe }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout, loading, fetchMe, toggleBookmark }}>
       {!loading && children}
     </AuthContext.Provider>
   );

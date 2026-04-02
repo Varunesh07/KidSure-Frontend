@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Phone, Clock, AlertCircle, Bookmark, Share2 } from 'lucide-react';
 import api from '../api/axios';
 import { useLocationInfo } from '../context/LocationContext';
+import { useAuth } from '../context/AuthContext';
 import { calculateDistance } from '../utils/distance';
 import { getHospitalStatus } from '../utils/getStatus';
 import MapView from '../components/MapView';
@@ -11,6 +12,7 @@ export default function HospitalDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { location, locationError, isLoadingLocation, fetchLocation } = useLocationInfo();
+  const { user, toggleBookmark } = useAuth();
   
   const [hospital, setHospital] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -91,8 +93,8 @@ export default function HospitalDetail() {
             <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/30 transition">
               <Share2 size={16} />
             </button>
-            <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/30 transition">
-              <Bookmark size={18} />
+            <button onClick={() => toggleBookmark(hospital._id)} className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/30 transition">
+              <Bookmark size={18} fill={user?.savedHospitals?.includes(hospital._id) ? "white" : "none"} />
             </button>
           </div>
         </div>

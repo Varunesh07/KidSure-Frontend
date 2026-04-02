@@ -6,6 +6,7 @@ import SearchPage from './pages/SearchPage';
 import SymptomsPage from './pages/SymptomsPage';
 import ResultsPage from './pages/ResultsPage';
 import HospitalDetail from './pages/HospitalDetail';
+import SavedPage from './pages/SavedPage';
 import Sidebar from './components/Sidebar';
 import MobileTopBar from './components/MobileTopBar';
 import BottomNav from './components/BottomNav';
@@ -84,7 +85,7 @@ export default function App() {
             <Route path="/symptoms" element={<PrivateRoute><SymptomsPage /></PrivateRoute>} />
             <Route path="/symptoms/results" element={<PrivateRoute><ResultsPage /></PrivateRoute>} />
             <Route path="/hospital/:id" element={<PrivateRoute><HospitalDetail /></PrivateRoute>} />
-            <Route path="/saved" element={<PrivateRoute><div className="p-7 text-center">Saved (coming next)</div></PrivateRoute>} />
+            <Route path="/saved" element={<PrivateRoute><SavedPage /></PrivateRoute>} />
             
             <Route path="/admin" element={<AdminRoute><div className="p-7 text-center">Admin Dashboard</div></AdminRoute>} />
           </Routes>

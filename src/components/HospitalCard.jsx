@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapPin, Check, Bookmark, AlertCircle, Building2 } from 'lucide-react';
 import { getHospitalStatus } from '../utils/getStatus';
 import { useLocationInfo } from '../context/LocationContext';
+import { useAuth } from '../context/AuthContext';
 import { calculateDistance } from '../utils/distance';
 
 const CoverImage = ({ src, alt }) => {
@@ -41,8 +42,9 @@ const StarsRow = ({ rating, count }) => (
   </div>
 );
 
-export default function HospitalCard({ hospital, rank, matchedCats = [], onPress, onSave, saved }) {
+export default function HospitalCard({ hospital, rank, matchedCats = [], onPress }) {
   const { location } = useLocationInfo();
+  const { user, toggleBookmark } = useAuth();
   
   if (!hospital) return null;
 
@@ -66,7 +68,18 @@ export default function HospitalCard({ hospital, rank, matchedCats = [], onPress
         hover:border-teal hover:shadow-[0_6px_20px_rgba(31,178,156,0.12)]
         ${rank === 1 ? 'border-[1.5px] border-teal' : 'border-l3'}`}
     >
-      <CoverImage src={hospital.coverImage} alt={hospital.name} />
+      <div className="relative">
+        <CoverImage src={hospital.coverImage} alt={hospital.name} />
+        <button 
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleBookmark(hospital._id);
+          }} 
+          className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/30 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/50 transition z-10"
+        >
+          <Bookmark size={15} fill={user?.savedHospitals?.includes(hospital._id) ? "white" : "none"} />
+        </button>
+      </div>
 
       <div className="px-[15px] pt-[13px] pb-[15px]">
         {rank === 1 && (
@@ -95,14 +108,6 @@ export default function HospitalCard({ hospital, rank, matchedCats = [], onPress
             <StarsRow rating={hospital.avgRating} count={hospital.ratingCount} />
             <StatusBadge hospital={hospital} />
           </div>
-          {onSave && (
-            <button
-              onClick={e => { e.stopPropagation(); onSave(hospital._id); }}
-              className={`flex items-center justify-center p-[5px] rounded-[8px] border transition-all mt-1 md:mt-0
-                ${saved ? 'bg-green-bg border-green-bdr text-green-dark' : 'bg-l1 border-l3 text-mid hover:bg-l2'}`}>
-              <Bookmark size={13} fill={saved ? 'currentColor' : 'none'} />
-            </button>
-          )}
         </div>
 
         <div className="flex flex-wrap gap-1 mt-[9px]">
